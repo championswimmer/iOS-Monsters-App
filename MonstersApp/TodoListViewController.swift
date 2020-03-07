@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TodoListViewController: UIViewController, UITableViewDataSource {
+class TodoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var taskList = Array<String>()
     
@@ -29,10 +29,15 @@ class TodoListViewController: UIViewController, UITableViewDataSource {
         let cell = UITableViewCell(
             style: .default, reuseIdentifier: String(indexPath.count)
         )
-        cell.textLabel?.text = taskList[indexPath.item]
+        cell.textLabel?.text = taskList[indexPath.row]
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        taskList.remove(at: indexPath.row)
+        taskListTableView?.reloadData()
+    }
+        
     
     @IBAction func addTask(sender: UIButton) {
         if let task = newTaskField?.text {
